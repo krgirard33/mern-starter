@@ -3,6 +3,10 @@ https://www.youtube.com/watch?v=0osXx2oJu44
 
 https://github.com/RaddyTheBrand/30.MERN-Starter
 
+Create project folder [mern-starter]
+Inside project folder create server & client folders
+Open VSCode from project folder
+
 TERMINAL
 cd server
 npm init -y
@@ -16,17 +20,35 @@ PACKAGE.JSON - enter under scripts:
 	"start": "index.js",
     	"dev": "nodemon index.js"
 create index.js
+
 INDEX.JS - enter:
 	require("dotenv").config();
 	const cors = require("cors");
 	const express = require("express");
 
-	app, get("/", (req, res) => {
+	app.use(cors());
+	app.use(express.urlencoded({ extended: true }));
+	app.use(express.json());
+
+	app.get("/", (req, res) => {
   		res.json("Hello mate!");
 	});
 
-	app.listen(PORT, () => {
-  		console.log('Server is running on Port: ${PORT}')
+	// Sends status for all other pages
+	app.get("*", (req, res) => {
+  		res.sendStatus("404");
 	});
 
-SHORTCUT to run server: ctrl+'
+	app.listen(PORT, ()=> {
+  		console.log(`Server is running on Port: ${PORT}`)
+	});
+
+TERMINAL
+SHORTCUT to open terminal: ctrl+'
+npm run dev
+
+NOTES: 
+	You should see "Server is running on Port: 8000" in terminal.
+	Open browser and go to localhost:8000, and you should see "Hello mate!"
+	localhost:8000/about should show "Not found"
+
