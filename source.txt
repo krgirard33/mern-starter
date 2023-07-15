@@ -12,3 +12,21 @@ npm i --save-dev nodemon
 SERVER folder
 create .env file
 create .gitignore, and enter .env in it
+PACKAGE.JSON - enter under scripts: 
+	"start": "index.js",
+    	"dev": "nodemon index.js"
+create index.js
+INDEX.JS - enter:
+	require("dotenv").config();
+	const cors = require("cors");
+	const express = require("express");
+
+	app, get("/", (req, res) => {
+  		res.json("Hello mate!");
+	});
+
+	app.listen(PORT, () => {
+  		console.log('Server is running on Port: ${PORT}')
+	});
+
+SHORTCUT to run server: ctrl+'
