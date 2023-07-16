@@ -4,7 +4,7 @@ https://www.youtube.com/watch?v=0osXx2oJu44
 https://github.com/RaddyTheBrand/30.MERN-Starter
 
 Create project folder [mern-starter]
-Inside project folder create server & client folders
+Inside project folder create server folder
 Open VSCode from project folder
 
 TERMINAL
@@ -52,3 +52,25 @@ NOTES:
 	Open browser and go to localhost:8000, and you should see "Hello mate!"
 	localhost:8000/about should show "Not found"
 
+SHORTCUT to teminate batch job: ctrl+X
+
+***************************************
+INSTALL VITE
+Open new terminal, make sure you are in mern-stater
+npm create vite@latest
+	Project name: client
+	framework: React
+	variant: JavaScript
+cd client
+npm i
+npm run dev
+	Local: http://localhost:5173/
+	Network: use --host to expose
+change contents of client/index.css
+delete server/App.css
+strip App.jsx to bare minimum
+remove import './index.css' from main.jsx
+
+stop vite (ctrl+c)
+npm i react-router-dom
+npm run dev
