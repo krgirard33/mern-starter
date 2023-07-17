@@ -26,6 +26,7 @@ PACKAGE.JSON - enter under scripts:
 create index.js
 
 INDEX.JS - enter:
+-------------------
 	require("dotenv").config();
 	const cors = require("cors");
 	const express = require("express");
@@ -46,6 +47,7 @@ INDEX.JS - enter:
 	app.listen(PORT, ()=> {
   		console.log(`Server is running on Port: ${PORT}`)
 	});
+-------------------
 
 TERMINAL
 SHORTCUT to open terminal: ctrl+'
@@ -87,6 +89,7 @@ Paste that in the .env file. Replace <password> with the password you pased in h
 In front of that type MONGODB_URI= & add /Books to the end. Books is the name of the db. 
 
 In server folder create connectDB.js, and enter:
+-------------------
 	const mongoose = require("mongoose");
 
 	const connectDB = async () => {
@@ -101,14 +104,20 @@ In server folder create connectDB.js, and enter:
 	} 
 
 	module.exports = connectDB;
+-------------------
+
 Goto index.js, add 
+-------------------
 	(line4) const connectDB = require("./connectDB");
 	(line9) connectDB();
+-------------------
+
 In the terminal it should show that the server is running on Port: 8000, and Database Connected xx-xxx-xxxxxxx-xxxxx-xxxxx
 
 BACK TO IDE
 In server create models folder, inside it create Books.js
 Fill it with: 
+-------------------
 	const mongoose = require("mongoose");
 	const Schema = mongoose.Schema;
 
@@ -144,8 +153,10 @@ Fill it with:
 	});
 
 	module.exports = mongoose.model('Book', BookSchema);
+-------------------
 
-Open index.js add 
+Open index.js add
+------------------- 
 	(line4) const connectDB = require("./connectDB");
 	(line5) const Book = require('./models/Books');
 	(line15) app.get("/api/books", async (req, res) => {
@@ -157,7 +168,8 @@ Open index.js add
 			res.status(500).json({ error: "An error occurred while fetching the books." });
 		}
 	});
-	
+-------------------
+
 Goto http://localhost:8000/api/Books and you should see []
 
 
@@ -191,6 +203,7 @@ Add there to Hello in App.js and check that it updated
 ADD ROUTES
 ***************************************
 update App.jsx to:
+-------------------
 	import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 	function App() {
@@ -208,9 +221,12 @@ update App.jsx to:
 	}
 
 	export default App
+-------------------
 in client/src, add routes folder, and add Home folder in it
 NOTE: in VSCode add in VS Code ES7+ React/Redux/React-Native/JS snippets if you don't already have it (ctrl+alt+r to seach for snippits)
+
 update home.jsx to: (rfce)
+-------------------
 	import React from 'react'
 
 	function Home() {
@@ -224,3 +240,4 @@ update home.jsx to: (rfce)
 	}
 
 	export default Home
+-------------------
