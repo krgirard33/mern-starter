@@ -45,8 +45,8 @@ function Book() {
       <h1>Fetch Example</h1>
 
       <div className="filters">
-        <label>Categories</label>
-        <select onChange={(e) => setSelectedCategory(e.target.value)}>
+        <label htmlFor="category">Categories</label>
+        <select onChange={(e) => setSelectedCategory(e.target.value)} name="category">
           <option value="">All</option>
           <option value="romance">Romance</option>
           <option value="science">Science</option>
