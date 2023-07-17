@@ -3,6 +3,10 @@ https://www.youtube.com/watch?v=0osXx2oJu44
 
 https://github.com/RaddyTheBrand/30.MERN-Starter
 
+************************************************
+START IT OFF
+************************************************
+
 Create project folder [mern-starter]
 Inside project folder create server folder
 Open VSCode from project folder
@@ -54,8 +58,112 @@ NOTES:
 
 SHORTCUT to teminate batch job: ctrl+X
 
+
+
+***************************************
+SET UP DATABASE
+***************************************
+Go to https://www.mongodb.com/, sign in
+click 'Create New Project'
+name it
+assign team members (You will be automatically listed as owner)
+click 'Build A Database'
+Pick the free M0 option
+Choose if you want it on AWS, Google, or Azurej
+Pick the region closest to you
+Change the cluster name if you wish
+click Create
+Authenticate with username & password
+copy user name & password, paste them in .env file to use later
+click create user
+Pick local enviroment (future me will play with cloud)
+Check and make sure that there is an entry on IP Access List. If not click Add Current Location
+Click finish and close. 
+Click go to Databases, wait for it to deploy
+NOTE: To add an IP Address, click on Network Access. 0.0.0.0/0 allows you to connect from anywhere. 
+Click Connect, select MongoDB for VS Code
+Copy the 'Connect to your MongoDB deployment line. It will look something like mongodb+srv://kengirard:<password>@cluster0.1kD0wkd.mongodb.net/
+Paste that in the .env file. Replace <password> with the password you pased in here earlier.
+In front of that type MONGODB_URI= & add /Books to the end. Books is the name of the db. 
+
+In server folder create connectDB.js, and enter:
+	const mongoose = require("mongoose");
+
+	const connectDB = async () => {
+  		try {
+    			mongoose.set('strictQuery', false);
+    			const conn = await mongoose.connect(process.env.MONGODB_URI);
+    			console.log(`Database Connected ${conn.connection.host}`);
+  		} catch (error) {
+    			console.log(error);
+    			process.exit(1);
+  		}
+	} 
+
+	module.exports = connectDB;
+Goto index.js, add 
+	(line4) const connectDB = require("./connectDB");
+	(line9) connectDB();
+In the terminal it should show that the server is running on Port: 8000, and Database Connected xx-xxx-xxxxxxx-xxxxx-xxxxx
+
+BACK TO IDE
+In server create models folder, inside it create Books.js
+Fill it with: 
+	const mongoose = require("mongoose");
+	const Schema = mongoose.Schema;
+
+	const BookSchema = new Schema({
+  		title: {
+    			type: String,
+    			required: true,
+  		},
+  		slug: {
+    			type: String,
+    			//required: true,
+  		},
+  		description: {
+    			type: String,
+    			//required: true,
+  		},
+  		thumbnail: {
+    			type: String,
+    			//required: true,
+  		},
+  		stars: {
+    			type: Number,
+    			//required: true,
+  		},
+  		category: {
+    			type: Array,
+    			//required: true,
+  		},
+  		createdAt: {
+    			type: Date,
+    			default: Date.now()
+  		}
+	});
+
+	module.exports = mongoose.model('Book', BookSchema);
+
+Open index.js add 
+	(line4) const connectDB = require("./connectDB");
+	(line5) const Book = require('./models/Books');
+	(line15) app.get("/api/books", async (req, res) => {
+		try {
+			const data = await Book.find({});
+			res.json(data);
+		}
+		catch (error) {
+			res.status(500).json({ error: "An error occurred while fetching the books." });
+		}
+	});
+	
+Goto http://localhost:8000/api/Books and you should see []
+
+
 ***************************************
 INSTALL VITE
+***************************************
 Open new terminal, make sure you are in mern-stater
 npm create vite@latest
 	Project name: client
@@ -68,9 +176,51 @@ npm run dev
 	Network: use --host to expose
 change contents of client/index.css
 delete server/App.css
-strip App.jsx to bare minimum
+strip App.jsx to bare minimum (function, return <> </>, export)
 remove import './index.css' from main.jsx
 
+***************************************
+INSTALL react-router-dom
+***************************************
 stop vite (ctrl+c)
 npm i react-router-dom
 npm run dev
+Add there to Hello in App.js and check that it updated
+
+***************************************
+ADD ROUTES
+***************************************
+update App.jsx to:
+	import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+
+	function App() {
+	  return (
+		<>
+		  <Router>
+			Header
+			<Routes>
+			  <Route></Route>
+			</Routes>
+			Footer
+		  </Router>
+		</>
+	  )
+	}
+
+	export default App
+in client/src, add routes folder, and add Home folder in it
+NOTE: in VSCode add in VS Code ES7+ React/Redux/React-Native/JS snippets if you don't already have it (ctrl+alt+r to seach for snippits)
+update home.jsx to: (rfce)
+	import React from 'react'
+
+	function Home() {
+	  return (
+		<div>
+		  <h1>Home</h1>
+		  <p>Miniature Vite + React demo website.</p>
+		  <p>It uses NodeJs, Express & MongoDB as a backend!</p>
+		</div>
+	  )
+	}
+
+	export default Home
