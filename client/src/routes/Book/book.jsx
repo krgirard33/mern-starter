@@ -5,6 +5,7 @@ function Book() {
   const baseUrl = "http://localhost:8000/api/books";
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -20,6 +21,7 @@ function Book() {
         setIsLoading(false);
       } catch (error) {
         console.log(error);
+        setError("Error fetching date. Please try again later.");
         setIsLoading(false);
       }
     }
@@ -38,6 +40,8 @@ function Book() {
       {/* JSON.stringify(data, null, 2) */}
       {isLoading ? (
         <p>Loading...</p>
+      ) : error ? (
+        <p>{error}</p>
       ) : (
         <ul className="books">
           {data.map((item) => (
