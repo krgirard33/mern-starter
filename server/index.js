@@ -11,6 +11,7 @@ connectDB();
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use("/uploads", express.static("uploads"));
 
 app.get("/api/books", async (req, res) => {
   try {
@@ -31,6 +32,6 @@ app.get("*", (req, res) => {
   res.sendStatus("404");
 });
 
-app.listen(PORT, ()=> {
+app.listen(PORT, () => {
   console.log(`Server is running on Port: ${PORT}`)
 });
