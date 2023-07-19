@@ -30,7 +30,7 @@ function Book() {
         setError("Error fetching date. Please try again later.");
         setIsLoading(false);
       }
-    }
+    };
     fetchData();
   }, [selectedCategory])
 
@@ -41,9 +41,10 @@ function Book() {
         This is where we use NodeJs, Express & MongoDB to grab some data. The
         data below is pulled from a MongoDB database.
       </p>
+      <Link to="/createbook">Add New Book</Link>
 
       <h1>Fetch Example</h1>
-
+      {/* <pre>JSON.stringify(data, null, 2)</pre> */}
       <div className="filters">
         <label htmlFor="category">Categories</label>
         <select onChange={(e) => setSelectedCategory(e.target.value)} name="category">
@@ -59,7 +60,8 @@ function Book() {
         </select>
       </div>
 
-      {/* JSON.stringify(data, null, 2) */}
+      
+
       {isLoading ? (
         <p>Loading...</p>
       ) : error ? (
@@ -69,7 +71,8 @@ function Book() {
           {data.map((item) => (
             <li key={item._id}>
               <Link to={`/books/${item.slug}`}>
-                <img src={`http://localhost:8000/uploads/${item.thumbnail}`} alt={item.title} />
+                <img src={`http://localhost:8000/uploads/${item.thumbnail}`}
+                  alt={item.title} />
                 <h3>{item.title}</h3>
               </Link>
             </li>
@@ -77,7 +80,7 @@ function Book() {
         </ul>
       )}
     </div>
-  )
+  );
 }
 
 export default Book
